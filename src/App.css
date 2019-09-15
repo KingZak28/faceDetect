@@ -2,7 +2,7 @@
   font-family: 'Toy Font';
   font-style: normal;
   font-weight: normal;
-  src: local('Toy Font'), url('toyFont.ttf') format('truetype');
+  src: local('Toy Font'), url('toyFont.TTF') format('truetype');
 
 }
 h1{

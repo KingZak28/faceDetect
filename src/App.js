@@ -53,7 +53,8 @@ class App extends Component {
     super();
     this.state = {
       input: '',
-      imgUrl: ''
+      imgUrl: '',
+      box: {}
     }
   }
 
@@ -66,15 +67,39 @@ class App extends Component {
   onButtonSubmit = (event) => {
     this.setState({imgUrl: this.state.input });
 
-    app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input).then(
-      function(response) {
-        console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-      },
-      function(err) {
-        // there was an error
-      }
-    );
+    app.models
+    .predict(
+      Clarifai.FACE_DETECT_MODEL,
+      this.state.input)
+      .then(response => this.displayBox(this.calculateFaceBox(response)))
+      .catch(err => console.log(err));
   }
+
+  calculateFaceBox = (data) => {
+    const face = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('inputimage');
+    console.log(image);
+    //Typecast to number because the value returned is a string
+    const width = Number(image.width);
+    const height = Number(image.height);
+    console.log("H: " + height + "and width: " + width );
+    //We want to return an object with the dimensions of the box
+    return {
+        top_row : face.top_row*height,
+        left_col: face.left_col *width,
+
+
+        bottom_row:height -( face.bottom_row*height),
+        right_col: width - (face.right_col * width)
+
+    }
+  }
+
+  displayBox = (box) => {
+      this.setState({box});
+      console.log(box);
+  }
+
   render() {
       return (
       <div className="App">
@@ -84,7 +109,7 @@ class App extends Component {
         <Logo />
         <Rank />
         <ImageForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
-        <FaceRecognition imgUrl={this.state.imgUrl} />
+        <FaceRecognition imgUrl={this.state.imgUrl} box={this.state.box} />
       </div>
     );
   }
