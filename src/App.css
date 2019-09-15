@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'Toy Font';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Toy Font'), url('toyFont.ttf') format('truetype');
+
+}
+h1{
+  font-family: "Toy Font";
+}
+.App {
+  text-align: center;
+}
+
+.particles{
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left:0;
+}
