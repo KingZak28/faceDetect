@@ -8,39 +8,11 @@ import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImageForm from './components/ImageForm/ImageForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import {PARTICLEPARAMS} from './constants';
 import 'tachyons';
 
 import{ API_KEY } from './constants';
-const particleParams = {
-    particles: {
-      number: {
-        value: 230,
-        density: {
-          enable: true,
-          value_area: 800
-        }
-      }
-    },
-    opacity:{
-      value: 0.5
-    },
-    interactivity: {
-       detect_on: "window",
-       events: {
-           onhover: {
-               enable: true,
-               mode: "repulse"
-           },
-           onclick: {
-               enable: true,
-               mode: "push"
-           },
-           resize: true,
 
-       }
-     }
-
-}
 
 const app = new Clarifai.App({
  apiKey: API_KEY
@@ -103,8 +75,7 @@ class App extends Component {
   render() {
       return (
       <div className="App">
-
-        <Particles className="particles" params={particleParams}/>
+        <Particles className="particles" params={PARTICLEPARAMS}/>
         <Navigation />
         <Logo />
         <Rank />
